@@ -53,7 +53,14 @@ export class LoginComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      
+      if (this._utilidadServicio.estaAutenticado()) {
+        this.router.navigate(['pages']);
+      }
+
+      window.history.pushState(null, "", window.location.href);
+      window.onpopstate = () => {
+        window.history.pushState(null, "", window.location.href);
+      };
   }
 
   iniciarSesion() {

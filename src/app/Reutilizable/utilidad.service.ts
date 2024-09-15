@@ -32,4 +32,8 @@ export class UtilidadService {
   eliminarSesionUsuario() {
     localStorage.removeItem("usuario");
   }
+
+  estaAutenticado(): boolean {
+    return this.obtenerSesionUsuario() !== null;
+  }
 }
