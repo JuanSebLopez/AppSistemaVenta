@@ -45,11 +45,23 @@ export class LoginComponent implements OnInit{
     private _usuarioServicio: UsuarioService, 
     private _utilidadServicio: UtilidadService
   ) 
-    {
-      this.formularioLogin = this.fb.group({
-        email: ['', Validators.required],
-        password: ['', Validators.required]
-      });
+  {
+    this.formularioLogin = this.fb.group({
+      email: [
+        '', 
+        [
+          Validators.required,
+          Validators.email,
+          Validators.minLength(6)
+        ]
+      ],
+      password: [
+        '', 
+        [
+          Validators.required
+        ]
+      ]
+    });
   }
 
   ngOnInit(): void {

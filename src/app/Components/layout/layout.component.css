@@ -1,3 +1,24 @@
 mat-list-item {
     height: 56px !important; 
 }
+
+mat-list-item {
+    display: flex;
+    align-items: center;
+}
+
+mat-icon {
+    margin-right: 8px; /* Asegura espacio entre el ícono y el texto */
+}
+
+mat-sidenav mat-nav-list mat-list-item mat-icon {
+    margin-right: 8px;
+    font-size: 24px; /* O el tamaño que desees */
+    vertical-align: middle; /* Alinea el ícono verticalmente con el texto */
+}
+
+mat-sidenav mat-nav-list mat-list-item div[mat-line] {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px; /* Espacio entre el ícono y el texto */
+}

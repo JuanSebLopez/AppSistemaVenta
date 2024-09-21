@@ -40,6 +40,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './modal-usuario.component.css'
 })
 export class ModalUsuarioComponent implements OnInit{
+  idUsuarioAutenticado: number | null = null;
   formularioUsuario: FormGroup;
   ocultarPassword: boolean = true;
   tituloAccion: string = "Agregar";
@@ -61,6 +62,11 @@ export class ModalUsuarioComponent implements OnInit{
       clave: ['',Validators.required],
       esActivo: ['1',Validators.required],
     });
+
+    const usuarioSesion = this._utilidadServicio.obtenerSesionUsuario();
+    if (usuarioSesion) {
+      this.idUsuarioAutenticado = usuarioSesion.idUsuario;
+    }
 
     if(this.datosUsuario != null) {
       this.tituloAccion = "Editar";
