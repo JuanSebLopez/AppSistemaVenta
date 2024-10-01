@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>{{tituloAccion}} Categoría</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="formularioCategoria">
+    <mat-grid-list cols="1" rowHeight="80px">
+      <!-- Campo para el nombre de la categoría -->
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre de la Categoría</mat-label>
+          <input matInput autocomplete="off" formControlName="nombre">
+          <mat-icon matSuffix>category</mat-icon>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- Selector para el estado de la categoría -->
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="esActivo">
+            <mat-option value="1">Activo</mat-option>
+            <mat-option value="0">Inactivo</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Volver</button>
+  <button mat-raised-button color="primary" [disabled]="formularioCategoria.invalid" (click)="guardarEditar_Categoria()">
+    {{botonAccion}}
+  </button>
+</mat-dialog-actions>
