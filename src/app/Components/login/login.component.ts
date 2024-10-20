@@ -9,7 +9,7 @@ import { UtilidadService } from '../../Reutilizable/utilidad.service';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule} from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon'; 
 import { MatProgressBarModule } from '@angular/material/progress-bar'; 
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit{
         [
           Validators.required,
           Validators.email,
-          Validators.minLength(6)
+          emailMinLengthValidator
         ]
       ],
       password: [
@@ -101,4 +101,16 @@ export class LoginComponent implements OnInit{
       }
     })
   }
+}
+
+export function emailMinLengthValidator(control: AbstractControl): ValidationErrors | null {
+  const email = control.value;
+
+  if(!email || !email.includes('@')) {
+    return null;
+  }
+
+  const localPart = email.split('@')[0];
+
+  return localPart.length >= 6 ? null : {emailMinLength: true}
 }

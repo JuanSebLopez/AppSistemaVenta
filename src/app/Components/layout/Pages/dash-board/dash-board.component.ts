@@ -70,7 +70,6 @@ export class DashBoardComponent implements OnInit {
           
           const labelTemp = arrayData.map((value) => value.fecha);
           const dataTemp = arrayData.map((value) => value.total);
-          console.log(labelTemp,dataTemp);
           this.mostrarGrafico(labelTemp,dataTemp);
         }
       },

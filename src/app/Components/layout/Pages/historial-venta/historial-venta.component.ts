@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import moment from 'moment';
+import moment, { invalid } from 'moment';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -66,7 +66,6 @@ export const MY_DATA_FORMATS = {
   styleUrl: './historial-venta.component.css'
 })
 export class HistorialVentaComponent implements AfterViewInit{
-
   formularioBusqueda: FormGroup;
   opcionesBusqueda: any[] = [
     {value: "fecha", descripcion: "Por fechas"},
@@ -75,31 +74,39 @@ export class HistorialVentaComponent implements AfterViewInit{
   columnasTabla:string[] = ['fechaRegistro','numeroDocumento','tipoPago','total','accion']
   dataInicio: Venta[] = [];
   datosListaVenta = new MatTableDataSource(this.dataInicio);
+  maxDate: Date;
   @ViewChild(MatPaginator) paginacionTabla! : MatPaginator;
 
   constructor(
     private fb:FormBuilder,
+    private cd: ChangeDetectorRef,
     private dialog:MatDialog,
     private _ventaServicio: VentaService,
     private _utilidadServicio: UtilidadService
   ) {
+    this.maxDate = new Date();
+    const today = new Date();
+    
     this.formularioBusqueda = this.fb.group({
-      buscarPor: ['fecha'],
-      numero : [''],
-      fechaInicio : [''],
-      fechaFin : ['']
-    });
-
+      buscarPor: ['fecha', [Validators.required]],
+      numero : ['', [this.validarFiltro.bind(this)]],
+      fechaInicio : [today],
+      fechaFin : [today]
+    }, {validators: this.validarFechas.bind(this) });
+    
     this.formularioBusqueda.get("buscarPor")?.valueChanges.subscribe(value => {
       this.formularioBusqueda.patchValue({
         numero  : "",
-        fechaInicio: "",
-        fechaFin:""
-      })
-    })
+        fechaInicio: today,
+        fechaFin: today
+      });
+
+      this.cd.detectChanges();
+    });
   }
 
   ngAfterViewInit(): void {
+    this.cd.detectChanges();
     this.datosListaVenta.paginator = this.paginacionTabla;
   }
 
@@ -109,19 +116,21 @@ export class HistorialVentaComponent implements AfterViewInit{
   }
 
   buscarVentas(){
-    let _fechaInicio : string ="";
-    let _fechaFin : string ="";
-
-    if(this.formularioBusqueda.value.buscarPor === "fecha"){
-      _fechaInicio = moment(this.formularioBusqueda.value.fechaInicio).format('DD/MM/YYYY');
-      _fechaFin = moment(this.formularioBusqueda.value.fechaFin).format('DD/MM/YYYY');
-
-      if(_fechaInicio === "Invalid date" || _fechaFin === "Invalid date"){
-        this._utilidadServicio.mostrarAlerta("Debe ingresar ambas fechas","Oops!")
-        return;
+    if (!this.formularioBusqueda.valid) {
+      const errores = this.formularioBusqueda.errors;
+      if(errores?.['invalidFecha']) {
+        this._utilidadServicio.mostrarAlerta("Debe ingresar ambas fechas", "Oops!");
+      } else if (errores?.['fechaFutura']) {
+        this._utilidadServicio.mostrarAlerta("Las fechas no pueden ser futuras", "Oops!");
+      } else if (errores?.['invalidRango']) {
+        this._utilidadServicio.mostrarAlerta("Fecha fina debe ser mayor o igual a la fecha de inicio", "Oops!")
       }
+      return;
     }
 
+    let _fechaInicio = moment(this.formularioBusqueda.value.fechaInicio).format('DD/MM/YYYY');
+    let _fechaFin = moment(this.formularioBusqueda.value.fechaFin).format('DD/MM/YYYY');
+      
     this._ventaServicio.historial(
       this.formularioBusqueda.value.buscarPor,
       this.formularioBusqueda.value.numero,
@@ -146,5 +155,55 @@ export class HistorialVentaComponent implements AfterViewInit{
       disableClose: true,
       width: '700px'
     });
+  }
+
+  validarFechas(group: AbstractControl): { [key: string]: boolean} | null {
+    const buscarPor = group.get('buscarPor')?.value;
+    const fechaInicioValue = group.get('fechaInicio')?.value;
+    const fechaFinValue = group.get('fechaFin')?.value;
+
+    if (!fechaInicioValue || !fechaFinValue) {
+      if(buscarPor === 'fecha'){
+        return { invalidFecha: true};
+      }
+      return null;
+    }
+    
+    const fechaInicio = moment(fechaInicioValue, 'DD/MM/YYYY', true);
+    const fechaFin = moment(fechaFinValue, 'DD/MM/YYYY', true);
+
+    if (buscarPor === 'fecha') {
+      const hoy = moment().endOf('day');
+      
+      if (fechaInicio.isSame(fechaFin)) {
+        return null;
+      }
+  
+      if (fechaInicio.isAfter(hoy) || fechaFin.isAfter(hoy)) {
+        return { fechaFutura: true };
+      }
+      
+      if (!fechaInicio.isValid() || !fechaFin.isValid()) {
+        return { invalidFecha: true };
+      }
+  
+      if (fechaInicio.isAfter(fechaFin)) {
+        console.log("Error: invalidRango");
+        return { invalidRango: true };
+      }
+    }
+  
+    return null;
+  }
+
+  validarFiltro(control: AbstractControl): { [key: string]: boolean } | null {
+    const buscarPor = this.formularioBusqueda?.get('buscarPor')?.value;
+    if (buscarPor === 'numero') {
+      const numero = control.value;
+      if (!numero || isNaN(numero) || parseInt(numero, 10) <= 0 || /^d+$/.test(numero) && parseInt(numero, 10) === 0) {
+        return { invalidNumero: true};
+      }
+    }
+    return null;
   }
 }

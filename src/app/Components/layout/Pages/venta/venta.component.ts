@@ -61,7 +61,7 @@ export class VentaComponent {
   datosDetalleVenta = new MatTableDataSource(this.listaProductosParaVenta);
 
   retornarProductosPorFiltro(busqueda:any):Producto[]{
-    const valorBuscado = typeof busqueda === "string" ? busqueda.toLocaleLowerCase() : busqueda.nombre.toLocaleLowerCase();
+    const valorBuscado = typeof busqueda === "string" ? busqueda.toLocaleLowerCase() : busqueda?.nombre?.toLocaleLowerCase() || '';
 
     return this.listaProductos.filter(item => item.nombre.toLocaleLowerCase().includes(valorBuscado));
   }
@@ -75,8 +75,8 @@ export class VentaComponent {
 
 
     this.formularioProductoVenta = this.fb.group({
-      producto: ['',Validators.required],
-      cantidad: ['',Validators.required]
+      producto: ['', [Validators.required]],
+      cantidad: ['', [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")]]
     });
 
     

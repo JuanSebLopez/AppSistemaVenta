@@ -18,7 +18,6 @@ export class UtilidadService {
   }
 
   guardarSesion(usuarioSesion: Sesion) {
-    console.log('Sesión guardada:', usuarioSesion);
     localStorage.setItem("usuario", JSON.stringify(usuarioSesion));
   }
 

@@ -14,12 +14,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule} from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon'; 
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 
+const validRoles = [1, 2, 3];
+const validStatus = ['0', '1'];
 
 @Component({
   selector: 'app-modal-usuario',
@@ -56,11 +58,11 @@ export class ModalUsuarioComponent implements OnInit{
     private _utilidadServicio: UtilidadService
   ) {
     this.formularioUsuario = this.fb.group({
-      nombreCompleto: ['',Validators.required],
-      correo: ['',Validators.required],
-      idRol: ['',Validators.required],
-      clave: ['',Validators.required],
-      esActivo: ['1',Validators.required],
+      nombreCompleto: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      correo: ['', [Validators.required, Validators.email, emailMinMaxLengthValidator]],
+      idRol: ['', [Validators.required, validRolValidator]],
+      clave: ['', [Validators.required, passwordLengthValidator]],
+      esActivo: ['1', [Validators.required, validStatusValidator]],
     });
 
     const usuarioSesion = this._utilidadServicio.obtenerSesionUsuario();
@@ -128,4 +130,41 @@ export class ModalUsuarioComponent implements OnInit{
       });
     }
   }
+}
+
+export function emailMinMaxLengthValidator(control: AbstractControl): ValidationErrors | null {
+  const email = control.value;
+
+  if (!email || !email.includes('@')){
+    return null;
+  }
+
+  const localPart = email.split('@')[0];
+
+  return localPart.length >= 6 && localPart.length <= 40 ? null : {emailMinLength: true};
+}
+
+export function passwordLengthValidator(control: AbstractControl): ValidationErrors | null {
+  const password = control.value;
+  return password && password.length >= 8 && password.length <= 16 ? null : { passwordLength: true};
+}
+
+export function validRolValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+
+  if(validRoles.includes(value)){
+    return null;
+  }
+
+  return { invalidRol: true};
+}
+
+export function validStatusValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+
+  if(validStatus.includes(value)){
+    return null;
+  }
+
+  return { invalidStatus: true};
 }

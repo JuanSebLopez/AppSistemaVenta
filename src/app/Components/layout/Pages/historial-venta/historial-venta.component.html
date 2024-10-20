@@ -15,20 +15,41 @@
                 <mat-form-field appearance="fill" *ngIf="formularioBusqueda.value.buscarPor == 'numero'">
                     <mat-label>Numero Orden</mat-label>
                     <input matInput autocomplete="off" formControlName="numero">
+                    <mat-error *ngIf="formularioBusqueda.get('numero')?.hasError('invalidNumero')">
+                        Número de orden inválido
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" *ngIf="formularioBusqueda.value.buscarPor == 'fecha'">
                     <mat-label>Fecha Inicio</mat-label>
-                    <input matInput autocomplete="off" formControlName="fechaInicio" [matDatepicker]="picker1">
+                    <input matInput autocomplete="off" formControlName="fechaInicio" [value]="maxDate" [matDatepicker]="picker1" [max]="maxDate">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error *ngIf="formularioBusqueda.get('fechaInicio')?.hasError('invalidFecha')">
+                        Fecha inválida
+                    </mat-error>
+                    <mat-error *ngIf="formularioBusqueda.hasError('invalidRango')">
+                        Fecha fin debe ser mayor o igual a la fecha de inicio
+                    </mat-error>
+                    <mat-error *ngIf="formularioBusqueda.hasError('fechaFutura')">
+                        Las fechas no pueden ser futuras
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" *ngIf="formularioBusqueda.value.buscarPor == 'fecha'">
                     <mat-label>Fecha Fin</mat-label>
-                    <input matInput autocomplete="off" formControlName="fechaFin" [matDatepicker]="picker2">
+                    <input matInput autocomplete="off" formControlName="fechaFin" [matDatepicker]="picker2" [max]="maxDate">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error *ngIf="formularioBusqueda.hasError('invalidFecha')">
+                        Fecha Inválida
+                    </mat-error>
+                    <mat-error *ngIf="formularioBusqueda.hasError('invalidRango')">
+                        La fecha final debe ser mayor o igual a la fecha de inicio
+                    </mat-error>
+                    <mat-error *ngIf="formularioBusqueda.hasError('fechaFutura')">
+                        Las fechas no pueden ser futuras
+                    </mat-error>
                 </mat-form-field>
 
                 <button mat-raised-button color="primary" 

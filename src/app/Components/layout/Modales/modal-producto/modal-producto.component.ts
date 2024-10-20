@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { Categoria } from '../../../../Interfaces/categoria';
@@ -18,6 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+
+const validStatus = ['0', '1']; 
 
 @Component({
   selector: 'app-modal-producto',
@@ -52,11 +54,11 @@ export class ModalProductoComponent implements OnInit{
     private _utilidadServicio: UtilidadService
   ) {
     this.formularioProducto = this.fb.group({
-      nombre: ['',Validators.required],
-      idCategoria: ['',Validators.required],
-      stock: ['',Validators.required],
-      precio: ['',Validators.required],
-      esActivo: ['1',Validators.required]
+      nombre: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      idCategoria: ['',[Validators.required]],
+      stock: ['',[Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")]],
+      precio: ['',[Validators.required, Validators.min(50), Validators.pattern("^[0-9]*$")]],
+      esActivo: ['1', [Validators.required, validStatusValidator]]
     });
 
     if(this.datosProducto != null){
@@ -124,4 +126,14 @@ export class ModalProductoComponent implements OnInit{
     }
 
   }
+}
+
+export function validStatusValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+
+  if(validStatus.includes(value)){
+    return null;
+  }
+
+  return { invalidStatus: true};
 }
