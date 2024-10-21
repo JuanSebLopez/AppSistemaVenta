@@ -6,14 +6,14 @@
             <div class="campos-formulario">
                 <mat-form-field appearance="fill">
                     <mat-label>Fecha Inicio</mat-label>
-                    <input matInput autocomplete="off" formControlName="fechaInicio" [matDatepicker]="picker1">
+                    <input matInput autocomplete="off" formControlName="fechaInicio" [matDatepicker]="picker1" [max]="maxDate">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
                     <mat-label>Fecha Fin</mat-label>
-                    <input matInput autocomplete="off" formControlName="fechaFin" [matDatepicker]="picker2">
+                    <input matInput autocomplete="off" formControlName="fechaFin" [matDatepicker]="picker2" [max]="maxDate">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>

@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Workbook } from 'exceljs';
@@ -62,6 +62,7 @@ export class ReporteComponent {
   listaVentasReporte: Reporte[] = [];
   columnasTabla: string[] = ['fechaRegistro','numeroVenta','tipoPago','total','producto','cantidad','precio','totalProducto'];
   dataVentaReporte= new MatTableDataSource(this.listaVentasReporte);
+  maxDate: Date;
   @ViewChild(MatPaginator) paginacionTabla! : MatPaginator;
 
   constructor(
@@ -69,10 +70,11 @@ export class ReporteComponent {
     private _ventaServicio: VentaService,
     private _utilidadServicio: UtilidadService
   ) {
+    this.maxDate = new Date();
     this.formularioFiltro = this.fb.group({
       fechaInicio : ['',Validators.required],
       fechaFin : ['',Validators.required]
-    });
+    }, {validators: this.validarFechas.bind(this) });
   }
 
   ngAfterViewInit(): void {
@@ -80,30 +82,66 @@ export class ReporteComponent {
   }
   
   buscarVentas() {
-    const _fechaInicio = moment(this.formularioFiltro.value.fechaInicio).format('DD/MM/YYYY');
-    const _fechaFin = moment(this.formularioFiltro.value.fechaFin).format('DD/MM/YYYY');
-
-    if(_fechaInicio === "Invalid date" || _fechaFin === "Invalid date"){
-      this._utilidadServicio.mostrarAlerta("Debe ingresar ambas fechas","Oops!")
+    if(!this.formularioFiltro.valid) {
+      const errores = this.formularioFiltro.errors;
+      if(errores?.['invalidFecha']) {
+        this._utilidadServicio.mostrarAlerta("Debe ingresar ambas fechas", "Oops!");
+      } else if (errores?.['fechaFutura']) {
+        this._utilidadServicio.mostrarAlerta("Las fechas no pueden ser futuras", "Oops!");
+      } else if (errores?.['invalidRango']) {
+        this._utilidadServicio.mostrarAlerta("La fecha de inicio debe ser menor o igual a la fecha fin", "Oops!");
+      }
       return;
     }
+
+    const _fechaInicio = moment(this.formularioFiltro.value.fechaInicio).format('DD/MM/YYYY');
+    const _fechaFin = moment(this.formularioFiltro.value.fechaFin).format('DD/MM/YYYY');
 
     this._ventaServicio.reporte(
       _fechaInicio,
       _fechaFin
     ).subscribe({
-      next: (data)=>{
-        if(data.status){
+      next: (data) => {
+        if (data.status) {
           this.listaVentasReporte = data.value;
           this.dataVentaReporte.data = data.value;
-        }else{
+        } else {
           this.listaVentasReporte = [];
           this.dataVentaReporte.data = [];
-          this._utilidadServicio.mostrarAlerta("No se encontraron datos","Oops!")
+          this._utilidadServicio.mostrarAlerta("No se encontraron datos", "Oops!");
         }
       },
-      error:(e) =>{}
+      error: (e) => {
+        console.log(e);
+      }
     });
+  }
+
+  validarFechas(group: AbstractControl): { [key: string]: boolean } | null {
+    const fechaInicioValue = group.get('fechaInicio')?.value;
+    const fechaFinValue = group.get('fechaFin')?.value;
+
+    if (!fechaInicioValue || !fechaFinValue) {
+      return { invalidFecha: true };
+    }
+
+    const fechaInicio = moment(fechaInicioValue, 'DD/MM/YYYY', true);
+    const fechaFin = moment(fechaFinValue, 'DD/MM/YYYY', true);
+
+    const hoy = moment().endOf('day');
+    if (fechaInicio.isAfter(hoy) || fechaFin.isAfter(hoy)) {
+      return { fechaFutura: true };
+    }
+
+    if (!fechaInicio.isValid() || !fechaFin.isValid()) {
+      return { invalidFecha: true };
+    }
+
+    if (fechaInicio.isAfter(fechaFin)) {
+      return { invalidRango: true };
+    }
+
+    return null;
   }
 
   exportarExcel() {
