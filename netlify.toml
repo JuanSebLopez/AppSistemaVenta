@@ -3,6 +3,12 @@
   publish = "dist/app-sistema-venta/browser"
 
 [[redirects]]
+  from = "/api/*"
+  to = "http://sistemaventa-api.runasp.net/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
