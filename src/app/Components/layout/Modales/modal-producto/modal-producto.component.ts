@@ -66,12 +66,21 @@ export class ModalProductoComponent implements OnInit{
       this.botonAccion = "Actualizar";
     }
 
+    if (this._utilidadServicio.permitirAccesoDemo()) {
+      this.listaCategorias = this._utilidadServicio.obtenerCategoriasDemo();
+      return;
+    }
+
     this._categoriaServicio.list().subscribe({
       next: (data) => {
         if(data.status) this.listaCategorias = data.value
       },
       error: (e) => {
-        console.log(e)
+        if (this._utilidadServicio.permitirAccesoDemo()) {
+          this.listaCategorias = this._utilidadServicio.obtenerCategoriasDemo();
+        } else {
+          console.log(e)
+        }
       }
     });
   }
@@ -90,6 +99,12 @@ export class ModalProductoComponent implements OnInit{
   }
 
   guardarEditar_Producto(){
+    if (this._utilidadServicio.permitirAccesoDemo()) {
+      this._utilidadServicio.mostrarAlerta("Modo demo: cambio visual aplicado temporalmente", "Demo");
+      this.modalActual.close("true");
+      return;
+    }
+
     const _producto: Producto = {
       idProducto : this.datosProducto == null ? 0 : this.datosProducto.idProducto,
       nombre : this.formularioProducto.value.nombre,

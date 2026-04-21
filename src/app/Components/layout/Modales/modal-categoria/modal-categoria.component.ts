@@ -71,6 +71,12 @@ export class ModalCategoriaComponent implements OnInit{
   }
 
   guardarEditar_Categoria() {
+    if (this._utilidadServicio.permitirAccesoDemo()) {
+      this._utilidadServicio.mostrarAlerta("Modo demo: cambio visual aplicado temporalmente", "Demo");
+      this.modalActual.close("true");
+      return;
+    }
+
     const _categoria: Categoria = {
       idCategoria: this.datosCategoria == null ? 0 : this.datosCategoria.idCategoria,
       nombre: this.formularioCategoria.value.nombre,

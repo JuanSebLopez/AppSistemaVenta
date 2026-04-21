@@ -1,118 +1,133 @@
-<h1 style="margin:20px 0px 0px 40px"> Productos</h1>
-<mat-card style="margin:20px 40px 40px 40px">
-    <mat-card-content class="dashboard-card-content">
-
-        <mat-card-title style="margin: 0px 0px 5px 0px;">
-            <button mat-raised-button color="primary" (click)="nuevoProducto()">
-                <mat-icon mat-list-icon>add</mat-icon>Nuevo Producto
-            </button>
-        </mat-card-title>
-
-        <mat-form-field appearance="outline" class="input-filter">
-            <mat-label>Buscar</mat-label>
-            <input matInput (keyup)="aplicarFiltroTabla($event)" #input>
-        </mat-form-field>
-
-        <div class="mat-elevation-z2">
-            <table mat-table [dataSource]="dataListaProductos">
-                <ng-container matColumnDef="nombre">
-                    <th mat-header-cell *matHeaderCellDef> Nombre</th>
-                    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="categoria">
-                    <th mat-header-cell *matHeaderCellDef> Categoria</th>
-                    <td mat-cell *matCellDef="let element"> {{element.categoriaDescripcion}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="stock">
-                    <th mat-header-cell *matHeaderCellDef> Stock</th>
-                    <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="precio">
-                    <th mat-header-cell *matHeaderCellDef> Precio</th>
-                    <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="estado">
-                    <th mat-header-cell *matHeaderCellDef> Estado</th>
-                    <td mat-cell *matCellDef="let element"> {{element.esActivo == 1 ? 'Activo' : 'No activo'}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="acciones">
-                    <th mat-header-cell *matHeaderCellDef style="width: 80px;"></th>
-                    <td mat-cell *matCellDef="let element">     
-                        <button mat-icon-button color="primary" (click)="editarProducto(element)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-icon-button color="warn" (click)="eliminarProducto(element)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
-                <tr mat-row *matRowDef="let row; columns : columnasTabla;"></tr>
-
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">No hay datos que coincidan con el filtro "{{input.value}}"</td>
-                </tr>
-            </table>
-            <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+<section class="page-shell">
+    <header class="page-header">
+        <div>
+            <p class="page-kicker">Modulo</p>
+            <h1>Productos y categorias</h1>
         </div>
-    </mat-card-content>
-</mat-card>
+    </header>
 
-<h1 style="margin:20px 0px 0px 40px;">Categorias</h1>
-<mat-card style="margin:20px 40px 40px 40px">
-    <mat-card-content class="dashboard-card-content">
-
-        <mat-card-title style="margin: 0px 0px 5px 0px;">
-            <button mat-raised-button color="primary" (click)="nuevaCategoria()">
-                <mat-icon mat-list-icon>add</mat-icon>Nueva Categoría
-            </button>
-        </mat-card-title>
-
-        <mat-form-field appearance="outline" class="input-filter">
-            <mat-label>Buscar Categoría</mat-label>
-            <input matInput (keyup)="aplicarFiltroTablaCategoria($event)" #inputCategoria>
-        </mat-form-field>
-
-        <div class="mat-elevation-z2">
-            <table mat-table [dataSource]="dataListaCategorias">
-                <ng-container matColumnDef="nombre">
-                  <th mat-header-cell *matHeaderCellDef> Nombre</th>
-                  <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-                </ng-container>
-            
-                <ng-container matColumnDef="estado">
-                  <th mat-header-cell *matHeaderCellDef> Estado</th>
-                  <td mat-cell *matCellDef="let element"> 
-                    {{element.esActivo == 1 ? 'Activo' : 'Inactivo'}} 
-                  </td>
-                </ng-container>
-            
-                <ng-container matColumnDef="acciones">
-                  <th mat-header-cell *matHeaderCellDef style="width: 80px;"></th>
-                  <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button color="primary" (click)="editarCategoria(element)">
-                      <mat-icon>edit</mat-icon>
+    <section class="section-grid">
+        <mat-card class="panel-card">
+            <mat-card-content class="panel-body">
+                <div class="panel-header-row">
+                    <div>
+                        <p class="section-label">Catalogo principal</p>
+                        <h2>Productos</h2>
+                    </div>
+                    <button class="action-button" mat-raised-button (click)="nuevoProducto()">
+                        <mat-icon>add</mat-icon> Nuevo producto
                     </button>
-                    <button mat-icon-button color="warn" (click)="eliminarCategoria(element)">
-                      <mat-icon>delete</mat-icon>
+                </div>
+
+                <mat-form-field appearance="outline" class="input-filter">
+                    <mat-label>Buscar producto</mat-label>
+                    <input matInput (keyup)="aplicarFiltroTabla($event)" #input>
+                </mat-form-field>
+
+                <div class="table-shell">
+                    <table mat-table [dataSource]="dataListaProductos">
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef> Nombre</th>
+                            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="categoria">
+                            <th mat-header-cell *matHeaderCellDef> Categoria</th>
+                            <td mat-cell *matCellDef="let element"> {{element.categoriaDescripcion}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="stock">
+                            <th mat-header-cell *matHeaderCellDef> Stock</th>
+                            <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="precio">
+                            <th mat-header-cell *matHeaderCellDef> Precio</th>
+                            <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="estado">
+                            <th mat-header-cell *matHeaderCellDef> Estado</th>
+                            <td mat-cell *matCellDef="let element"> {{element.esActivo == 1 ? 'Activo' : 'No activo'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="acciones">
+                            <th mat-header-cell *matHeaderCellDef style="width: 80px;"></th>
+                            <td mat-cell *matCellDef="let element">     
+                                <button mat-icon-button color="primary" (click)="editarProducto(element)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-icon-button color="warn" (click)="eliminarProducto(element)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
+                        <tr mat-row *matRowDef="let row; columns : columnasTabla;"></tr>
+
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">No hay datos que coincidan con el filtro "{{input.value}}"</td>
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="panel-card">
+            <mat-card-content class="panel-body">
+                <div class="panel-header-row">
+                    <div>
+                        <p class="section-label">Soporte de catalogo</p>
+                        <h2>Categorias</h2>
+                    </div>
+                    <button class="action-button ghost-button" mat-raised-button (click)="nuevaCategoria()">
+                        <mat-icon>add</mat-icon> Nueva categoria
                     </button>
-                  </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="columnasTablaCategorias"></tr>
-                <tr mat-row *matRowDef="let row; columns: columnasTablaCategorias;"></tr>
-            
-                <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="3">No hay categorías disponibles</td>
-                </tr>
-              </table>
-              <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
-        </div>
-    </mat-card-content>
-</mat-card>
+                </div>
+
+                <mat-form-field appearance="outline" class="input-filter">
+                    <mat-label>Buscar categoria</mat-label>
+                    <input matInput (keyup)="aplicarFiltroTablaCategoria($event)" #inputCategoria>
+                </mat-form-field>
+
+                <div class="table-shell">
+                    <table mat-table [dataSource]="dataListaCategorias">
+                        <ng-container matColumnDef="nombre">
+                          <th mat-header-cell *matHeaderCellDef> Nombre</th>
+                          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                        </ng-container>
+                    
+                        <ng-container matColumnDef="estado">
+                          <th mat-header-cell *matHeaderCellDef> Estado</th>
+                          <td mat-cell *matCellDef="let element"> 
+                            {{element.esActivo == 1 ? 'Activo' : 'Inactivo'}} 
+                          </td>
+                        </ng-container>
+                    
+                        <ng-container matColumnDef="acciones">
+                          <th mat-header-cell *matHeaderCellDef style="width: 80px;"></th>
+                          <td mat-cell *matCellDef="let element">
+                            <button mat-icon-button color="primary" (click)="editarCategoria(element)">
+                              <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" (click)="eliminarCategoria(element)">
+                              <mat-icon>delete</mat-icon>
+                            </button>
+                          </td>
+                        </ng-container>
+                    
+                        <tr mat-header-row *matHeaderRowDef="columnasTablaCategorias"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnasTablaCategorias;"></tr>
+                    
+                        <tr class="mat-row" *matNoDataRow>
+                          <td class="mat-cell" colspan="3">No hay categorias disponibles</td>
+                        </tr>
+                      </table>
+                      <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </section>
+</section>

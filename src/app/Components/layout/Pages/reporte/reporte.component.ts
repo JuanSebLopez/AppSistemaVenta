@@ -77,11 +77,27 @@ export class ReporteComponent {
     }, {validators: this.validarFechas.bind(this) });
   }
 
+  ngOnInit(): void {
+    if (this._utilidadServicio.permitirAccesoDemo()) {
+      this.cargarReporteDemo();
+    }
+  }
+
   ngAfterViewInit(): void {
     this.dataVentaReporte.paginator = this.paginacionTabla;
   }
+
+  private cargarReporteDemo() {
+    this.listaVentasReporte = this._utilidadServicio.obtenerReporteDemo();
+    this.dataVentaReporte.data = this.listaVentasReporte;
+  }
   
   buscarVentas() {
+    if (this._utilidadServicio.permitirAccesoDemo()) {
+      this.cargarReporteDemo();
+      return;
+    }
+
     if(!this.formularioFiltro.valid) {
       const errores = this.formularioFiltro.errors;
       if(errores?.['invalidFecha']) {
@@ -112,7 +128,11 @@ export class ReporteComponent {
         }
       },
       error: (e) => {
-        console.log(e);
+        if (this._utilidadServicio.permitirAccesoDemo()) {
+          this.cargarReporteDemo();
+        } else {
+          console.log(e);
+        }
       }
     });
   }

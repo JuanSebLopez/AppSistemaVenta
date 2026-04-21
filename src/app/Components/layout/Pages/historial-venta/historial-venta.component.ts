@@ -105,6 +105,16 @@ export class HistorialVentaComponent implements AfterViewInit{
     });
   }
 
+  ngOnInit(): void {
+    if (this._utilidadServicio.permitirAccesoDemo()) {
+      this.cargarHistorialDemo();
+    }
+  }
+
+  private cargarHistorialDemo() {
+    this.datosListaVenta.data = this._utilidadServicio.obtenerVentasDemo();
+  }
+
   ngAfterViewInit(): void {
     this.cd.detectChanges();
     this.datosListaVenta.paginator = this.paginacionTabla;
@@ -116,6 +126,17 @@ export class HistorialVentaComponent implements AfterViewInit{
   }
 
   buscarVentas(){
+    if (this._utilidadServicio.permitirAccesoDemo()) {
+      const ventasDemo = this._utilidadServicio.obtenerVentasDemo();
+      const buscarPor = this.formularioBusqueda.value.buscarPor;
+      const numero = (this.formularioBusqueda.value.numero || '').toString().toLowerCase();
+
+      this.datosListaVenta.data = buscarPor === 'numero' && numero
+        ? ventasDemo.filter(item => (item.numeroDocumento || '').toLowerCase().includes(numero))
+        : ventasDemo;
+      return;
+    }
+
     if (!this.formularioBusqueda.valid) {
       const errores = this.formularioBusqueda.errors;
       if(errores?.['invalidFecha']) {
@@ -139,12 +160,16 @@ export class HistorialVentaComponent implements AfterViewInit{
     ).subscribe({
       next: (data) =>{
         if(data.status)
-          this.datosListaVenta = data.value;
+          this.datosListaVenta.data = data.value;
         else
           this._utilidadServicio.mostrarAlerta("No se encontraron datos","Oops!");
       },
       error:(e) => {
-        console.log(e);
+        if (this._utilidadServicio.permitirAccesoDemo()) {
+          this.cargarHistorialDemo();
+        } else {
+          console.log(e);
+        }
       }
     });
   }

@@ -1,3 +1,76 @@
-table{
+.modal-shell {
+    display: grid;
+    gap: 12px;
+}
+
+.modal-head {
+    padding: 4px 0 0;
+}
+
+.modal-kicker,
+.detail-label {
+    margin: 0 0 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6a6a6a;
+}
+
+.modal-head h2 {
+    margin: 0;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 2rem;
+}
+
+.modal-copy {
+    margin: 10px 0 0;
+    color: rgba(21, 21, 21, 0.68);
+    line-height: 1.6;
+}
+
+.modal-content {
+    display: grid;
+    gap: 14px;
+    padding-top: 8px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+mat-form-field,
+.table-shell,
+table {
     width: 100%;
+}
+
+.detail-block {
+    display: grid;
+    gap: 8px;
+}
+
+.table-shell {
+    overflow: auto;
+    border: 1px solid rgba(21, 21, 21, 0.08);
+    border-radius: 10px;
+}
+
+.modal-actions {
+    padding-top: 6px;
+}
+
+.ghost-button {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.06) !important;
+    color: #151515 !important;
+    border: 1px solid rgba(21, 21, 21, 0.12);
+}
+
+@media (max-width: 700px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
 }

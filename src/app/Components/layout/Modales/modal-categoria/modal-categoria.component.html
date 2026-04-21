@@ -1,34 +1,32 @@
-<h2 mat-dialog-title>{{tituloAccion}} Categoría</h2>
+<div class="modal-shell">
+  <div class="modal-head">
+    <p class="modal-kicker">Modulo de categorias</p>
+    <h2 mat-dialog-title>{{tituloAccion}} categoria</h2>
+    <p class="modal-copy">Define el nombre visible y la disponibilidad de la categoria.</p>
+  </div>
 
-<mat-dialog-content>
-  <form [formGroup]="formularioCategoria">
-    <mat-grid-list cols="1" rowHeight="80px">
-      <!-- Campo para el nombre de la categoría -->
-      <mat-grid-tile>
-        <mat-form-field appearance="outline">
-          <mat-label>Nombre de la Categoría</mat-label>
-          <input matInput autocomplete="off" formControlName="nombre">
-          <mat-icon matSuffix>category</mat-icon>
-        </mat-form-field>
-      </mat-grid-tile>
+  <mat-dialog-content class="modal-content">
+    <form [formGroup]="formularioCategoria" class="modal-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre de la categoria</mat-label>
+        <input matInput autocomplete="off" formControlName="nombre">
+        <mat-icon matSuffix>category</mat-icon>
+      </mat-form-field>
 
-      <!-- Selector para el estado de la categoría -->
-      <mat-grid-tile>
-        <mat-form-field appearance="outline">
-          <mat-label>Estado</mat-label>
-          <mat-select formControlName="esActivo">
-            <mat-option value="1">Activo</mat-option>
-            <mat-option value="0">Inactivo</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </form>
-</mat-dialog-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="esActivo">
+          <mat-option value="1">Activo</mat-option>
+          <mat-option value="0">Inactivo</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Volver</button>
-  <button mat-raised-button color="primary" [disabled]="formularioCategoria.invalid" (click)="guardarEditar_Categoria()">
-    {{botonAccion}}
-  </button>
-</mat-dialog-actions>
+  <mat-dialog-actions align="end" class="modal-actions">
+    <button class="ghost-button" mat-raised-button mat-dialog-close>Volver</button>
+    <button class="action-button" mat-raised-button [disabled]="formularioCategoria.invalid" (click)="guardarEditar_Categoria()">
+      {{botonAccion}}
+    </button>
+  </mat-dialog-actions>
+</div>

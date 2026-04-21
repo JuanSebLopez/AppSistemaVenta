@@ -1,8 +1,63 @@
-mat-form-field {
-    width: 100%;
-    margin: 10px 10px;
+.modal-shell {
+    display: grid;
+    gap: 12px;
 }
 
-form {
-    width: 350px;
+.modal-head {
+    padding: 4px 0 0;
+}
+
+.modal-kicker {
+    margin: 0 0 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6a6a6a;
+}
+
+.modal-head h2 {
+    margin: 0;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 2rem;
+}
+
+.modal-copy {
+    margin: 10px 0 0;
+    color: rgba(21, 21, 21, 0.68);
+    line-height: 1.6;
+}
+
+.modal-content {
+    padding-top: 8px;
+}
+
+.modal-form {
+    display: grid;
+    gap: 10px;
+    width: min(420px, 100%);
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.modal-actions {
+    padding-top: 6px;
+}
+
+.action-button,
+.ghost-button {
+    border-radius: 10px;
+}
+
+.action-button {
+    background: #151515 !important;
+    color: #f1eee8 !important;
+}
+
+.ghost-button {
+    background: rgba(0, 0, 0, 0.06) !important;
+    color: #151515 !important;
+    border: 1px solid rgba(21, 21, 21, 0.12);
 }

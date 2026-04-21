@@ -1,3 +1,250 @@
-/* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --sv-paper: #f4efe6;
+  --sv-paper-strong: #fbf9f5;
+  --sv-paper-soft: #efe9df;
+  --sv-ink: #151515;
+  --sv-ink-muted: rgba(21, 21, 21, 0.68);
+  --sv-border: rgba(21, 21, 21, 0.12);
+  --sv-border-strong: rgba(21, 21, 21, 0.2);
+  --sv-grid: rgba(0, 0, 0, 0.05);
+  --sv-accent: #151515;
+  --sv-accent-contrast: #f1eee8;
+  --sv-hover: rgba(0, 0, 0, 0.05);
+  --sv-hover-strong: rgba(0, 0, 0, 0.08);
+  --sv-shadow: 0 18px 40px rgba(21, 21, 21, 0.08);
+}
+
+html, body {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Instrument Sans", "Segoe UI", sans-serif;
+  background: var(--sv-paper);
+  color: var(--sv-ink);
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cdk-overlay-container,
+.cdk-overlay-pane,
+.mat-mdc-select-panel,
+.mat-datepicker-content,
+.mat-mdc-menu-panel,
+.mat-mdc-autocomplete-panel {
+  font-family: "Instrument Sans", "Segoe UI", sans-serif !important;
+}
+
+.mat-mdc-card,
+.mat-mdc-table,
+.mat-mdc-paginator,
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 12px !important;
+}
+
+.mat-mdc-table {
+  background: transparent !important;
+}
+
+.mat-mdc-header-row {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.mat-mdc-header-cell {
+  color: #4f4f4f !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mat-mdc-row:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.mat-mdc-paginator {
+  background: transparent !important;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  margin-top: 2px;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-text-field-wrapper {
+  background: rgba(255, 255, 255, 0.38) !important;
+  border-radius: 10px !important;
+}
+
+.mdc-text-field--outlined {
+  --mdc-outlined-text-field-container-shape: 10px;
+  --mdc-outlined-text-field-outline-color: var(--sv-border-strong);
+  --mdc-outlined-text-field-hover-outline-color: rgba(21, 21, 21, 0.34);
+  --mdc-outlined-text-field-focus-outline-color: var(--sv-accent);
+  --mdc-outlined-text-field-caret-color: var(--sv-accent);
+  --mdc-outlined-text-field-focus-label-text-color: var(--sv-accent);
+  --mdc-outlined-text-field-label-text-color: rgba(21, 21, 21, 0.65);
+  --mdc-outlined-text-field-input-text-color: var(--sv-ink);
+  --mdc-outlined-text-field-input-placeholder-color: rgba(21, 21, 21, 0.46);
+}
+
+.mdc-text-field--filled {
+  --mdc-filled-text-field-container-color: rgba(255, 255, 255, 0.38);
+  --mdc-filled-text-field-focus-active-indicator-color: var(--sv-accent);
+  --mdc-filled-text-field-active-indicator-color: var(--sv-border-strong);
+  --mdc-filled-text-field-hover-active-indicator-color: rgba(21, 21, 21, 0.32);
+  --mdc-filled-text-field-focus-label-text-color: var(--sv-accent);
+  --mdc-filled-text-field-label-text-color: rgba(21, 21, 21, 0.65);
+  --mdc-filled-text-field-input-text-color: var(--sv-ink);
+  --mat-form-field-hover-state-layer-opacity: 0;
+}
+
+.mat-mdc-form-field-icon-suffix,
+.mat-mdc-form-field-icon-prefix,
+.mat-datepicker-toggle,
+.mat-mdc-select-arrow,
+.mat-mdc-select-arrow svg {
+  color: rgba(21, 21, 21, 0.66) !important;
+  fill: rgba(21, 21, 21, 0.66) !important;
+}
+
+.mat-mdc-select-value,
+.mat-mdc-option .mdc-list-item__primary-text,
+.mat-mdc-form-field-infix,
+.mat-mdc-input-element {
+  color: var(--sv-ink) !important;
+}
+
+.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+  background: rgba(0, 0, 0, 0.06) !important;
+}
+
+.mat-mdc-option:hover:not(.mdc-list-item--disabled),
+.mat-mdc-option.mdc-list-item--selected:hover:not(.mdc-list-item--disabled) {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+.mat-mdc-select-panel,
+.mat-mdc-autocomplete-panel,
+.mat-mdc-menu-panel,
+.mat-datepicker-content {
+  border: 1px solid var(--sv-border) !important;
+  border-radius: 12px !important;
+  background: var(--sv-paper-strong) !important;
+  box-shadow: var(--sv-shadow) !important;
+}
+
+.mat-mdc-select-panel,
+.mat-mdc-autocomplete-panel {
+  padding: 8px !important;
+}
+
+.mat-mdc-option,
+.mat-mdc-menu-item {
+  border-radius: 8px !important;
+}
+
+.mat-mdc-menu-item:hover,
+.mat-mdc-menu-item.cdk-program-focused,
+.mat-mdc-menu-item.cdk-keyboard-focused {
+  background: var(--sv-hover) !important;
+}
+
+.mat-datepicker-content .mat-calendar {
+  background: transparent !important;
+}
+
+.mat-calendar {
+  font-family: "Instrument Sans", "Segoe UI", sans-serif !important;
+}
+
+.mat-calendar-body-cell-content,
+.mat-calendar-body-label,
+.mat-calendar-table-header th,
+.mat-calendar-period-button,
+.mat-calendar-previous-button,
+.mat-calendar-next-button {
+  color: var(--sv-ink) !important;
+}
+
+.mat-calendar-body-selected {
+  background-color: var(--sv-accent) !important;
+  color: var(--sv-accent-contrast) !important;
+}
+
+.mat-calendar-body-today:not(.mat-calendar-body-selected) {
+  border-color: var(--sv-accent) !important;
+}
+
+.mat-calendar-body-cell-content:hover,
+.mat-calendar-body-active .mat-calendar-body-cell-content {
+  background: var(--sv-hover) !important;
+}
+
+.mat-mdc-paginator-container {
+  min-height: 64px !important;
+  padding: 10px 8px !important;
+  color: var(--sv-ink-muted);
+}
+
+.mat-mdc-paginator-range-label,
+.mat-mdc-paginator-page-size-label {
+  color: var(--sv-ink-muted) !important;
+}
+
+.mat-mdc-icon-button {
+  border-radius: 10px !important;
+}
+
+.mat-mdc-paginator .mat-mdc-icon-button,
+.mat-datepicker-toggle .mat-mdc-icon-button {
+  border: 1px solid transparent;
+}
+
+.mat-mdc-paginator .mat-mdc-icon-button:hover,
+.mat-datepicker-toggle .mat-mdc-icon-button:hover,
+.mat-mdc-icon-button:hover {
+  background: var(--sv-hover) !important;
+  border-color: var(--sv-border);
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background: var(--sv-paper-strong) !important;
+  color: var(--sv-ink) !important;
+  border: 1px solid var(--sv-border) !important;
+  box-shadow: var(--sv-shadow) !important;
+}
+
+.mat-mdc-dialog-title,
+.mat-mdc-dialog-content,
+.mat-mdc-dialog-actions {
+  color: var(--sv-ink) !important;
+}
+
+.mat-mdc-raised-button:not(:disabled) {
+  box-shadow: none !important;
+}
+
+.mat-mdc-button-base {
+  letter-spacing: 0.01em;
+}
+
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: #151515;
+  --mdc-snackbar-supporting-text-color: #f1eee8;
+  --mat-snack-bar-button-color: #f1eee8;
+  border-radius: 12px !important;
+}

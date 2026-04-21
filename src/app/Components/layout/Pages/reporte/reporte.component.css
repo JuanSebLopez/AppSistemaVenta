@@ -1,17 +1,85 @@
-.campo-formulario{
+.page-shell,
+.panel-body {
+    display: grid;
+    gap: 18px;
+}
+
+.page-header {
     display: flex;
-    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
 }
 
-.boton-buscar{
-    width: 150px;
-    margin-top: 15px;
+.page-kicker {
+    margin: 0 0 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6a6a6a;
 }
 
-mat-form-field{
-    margin-right: 10px;
+.page-header h1 {
+    margin: 0;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3rem);
 }
 
-table{
+.panel-card {
+    border: 1px solid rgba(21, 21, 21, 0.12);
+    border-radius: 12px;
+    background: rgba(251, 249, 245, 0.9);
+    box-shadow: none;
+}
+
+.panel-body {
+    padding: 22px;
+}
+
+.campos-formulario {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    align-items: start;
+}
+
+.action-button,
+.ghost-button {
+    min-height: 56px;
+    border-radius: 10px;
+}
+
+.action-button {
+    background: #151515 !important;
+    color: #f1eee8 !important;
+}
+
+.ghost-button {
+    background: rgba(0, 0, 0, 0.06) !important;
+    color: #151515 !important;
+    border: 1px solid rgba(21, 21, 21, 0.12);
+}
+
+.export-button {
+    min-width: 180px;
+}
+
+mat-form-field,
+table {
     width: 100%;
+}
+
+.table-shell {
+    overflow: auto;
+    border: 1px solid rgba(21, 21, 21, 0.08);
+    border-radius: 10px;
+}
+
+@media (max-width: 900px) {
+    .page-header,
+    .campos-formulario {
+        grid-template-columns: 1fr;
+        display: grid;
+    }
 }

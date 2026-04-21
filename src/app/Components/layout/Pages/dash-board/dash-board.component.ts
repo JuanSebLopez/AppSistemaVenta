@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DashBoardService } from '../../../../Services/dash-board.service';
+import { UtilidadService } from '../../../../Reutilizable/utilidad.service';
 import { Chart, registerables } from 'chart.js';
 
 import { MatCardModule } from '@angular/material/card';
@@ -26,8 +27,20 @@ export class DashBoardComponent implements OnInit {
   totalProductos:string ="0";
 
   constructor(
-    private _dashboardServicio: DashBoardService
+    private _dashboardServicio: DashBoardService,
+    private _utilidadServicio: UtilidadService
   ) {}
+
+  cargarResumenDemo() {
+    const data = this._utilidadServicio.obtenerResumenDashboardDemo();
+    this.totalIngresos = data.totalIngresos;
+    this.totalVentas = data.totalVentas;
+    this.totalProductos = data.totalProductos;
+
+    const labelTemp = data.ventasUltimaSemana.map((value) => value.fecha);
+    const dataTemp = data.ventasUltimaSemana.map((value) => value.total);
+    this.mostrarGrafico(labelTemp, dataTemp);
+  }
 
   mostrarGrafico(labelGrafico: any[], dataGrafico:any[]){
     const chartBarras = new Chart('chartBarras',{
@@ -59,6 +72,11 @@ export class DashBoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this._utilidadServicio.permitirAccesoDemo()) {
+      this.cargarResumenDemo();
+      return;
+    }
+
     this._dashboardServicio.resumen().subscribe({
       next:(data) =>{
         if(data.status){
@@ -73,7 +91,11 @@ export class DashBoardComponent implements OnInit {
           this.mostrarGrafico(labelTemp,dataTemp);
         }
       },
-      error:(e) =>{}
+      error:(e) =>{
+        if (this._utilidadServicio.permitirAccesoDemo()) {
+          this.cargarResumenDemo();
+        }
+      }
     });
   }
 }

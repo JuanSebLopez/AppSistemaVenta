@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Login } from '../../Interfaces/login';
 import { UsuarioService } from '../../Services/usuario.service';
 import { UtilidadService } from '../../Reutilizable/utilidad.service';
@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit{
   formularioLogin: FormGroup;
   ocultarPassword: boolean = true;
   mostrarLoading: boolean = false;
+  readonly accesoDemoDisponible = environment.enableDemoAccess;
 
   constructor(
     private fb: FormBuilder, 
@@ -100,6 +103,11 @@ export class LoginComponent implements OnInit{
         this._utilidadServicio.mostrarAlerta("Hubo un error", "Oops!");
       }
     })
+  }
+
+  ingresarDemo() {
+    this._utilidadServicio.crearSesionDemo();
+    this.router.navigate(["pages/dashboard"]);
   }
 }
 

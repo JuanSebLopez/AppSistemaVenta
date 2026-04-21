@@ -1,43 +1,86 @@
-<div class="body">
-    <mat-card class="loginCard" id="mat-card-login">
-        <div class="header">
-            <h2>Login</h2>
-        </div>
+<div class="login-page">
+    <div class="login-sheet">
+        <section class="login-aside">
+            <a class="back-link" routerLink="/">Volver al inicio</a>
 
-        <mat-card-content style="padding-bottom: 15px;">
-            <form [formGroup]="formularioLogin" (ngSubmit)="iniciarSesion()">
-                <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Email</mat-label>
-                    <input formControlName="email" matInput autocomplete="off">
-                    <mat-icon matSuffix id="mail-icon">mail</mat-icon>
-                    <mat-error *ngIf="formularioLogin.get('email')?.hasError('required')">
-                        El email es obligatorio.
-                    </mat-error>
-                    <mat-error *ngIf="formularioLogin.get('email')?.hasError('email')">
-                        El formato del email no es válido.
-                    </mat-error>
-                </mat-form-field>
+            <p class="section-tag">Acceso al entorno de practica</p>
+            <h1>Entrar al modulo principal.</h1>
+            <p class="support-text">
+                Esta pantalla abre un proyecto educativo orientado a flujo administrativo. El objetivo
+                no es vender una marca, sino presentar una interfaz clara, directa y mantenible.
+            </p>
 
-                <mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Contraseña</mat-label>
-                    <input [type]="ocultarPassword ? 'password' : 'text'" formControlName="password" matInput autocomplete="off">
-                    <button mat-icon-button matSuffix (click)="ocultarPassword = !ocultarPassword" type="button" id="visibility-icon">
-                        <mat-icon matSuffix>{{ocultarPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                    <mat-error *ngIf="formularioLogin.get('password')?.hasError('required')">
-                        La contraseña es obligatoria.
-                    </mat-error>
-                </mat-form-field>
-                
-                <button class="full-width" mat-raised-button color="primary" type="submit" [disabled]="formularioLogin.invalid" id="button-ingresar">
-                    Ingresar
-                    <mat-icon matSuffix>login</mat-icon>
+            <div class="note-card">
+                <span>Dentro del sistema</span>
+                <ul>
+                    <li>autenticacion y menu por usuario</li>
+                    <li>crud de usuarios, productos y categorias</li>
+                    <li>ventas, dashboard, historial y reportes</li>
+                </ul>
+            </div>
+        </section>
+
+        <mat-card class="login-card">
+            <div class="card-head">
+                <div class="brand-badge">SV</div>
+                <div>
+                    <p class="section-tag">Ingreso al sistema</p>
+                    <h2>Iniciar sesion</h2>
+                    <p class="card-subtitle">Usa tus credenciales para acceder a los modulos administrativos.</p>
+                </div>
+            </div>
+
+            <mat-card-content class="card-content">
+                <form [formGroup]="formularioLogin" (ngSubmit)="iniciarSesion()">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Correo electronico</mat-label>
+                        <input formControlName="email" matInput autocomplete="username">
+                        <mat-icon matSuffix>mail</mat-icon>
+                        <mat-error *ngIf="formularioLogin.get('email')?.hasError('required')">
+                            El email es obligatorio.
+                        </mat-error>
+                        <mat-error *ngIf="formularioLogin.get('email')?.hasError('email')">
+                            El formato del email no es valido.
+                        </mat-error>
+                        <mat-error *ngIf="formularioLogin.get('email')?.hasError('emailMinLength')">
+                            El email debe tener al menos 6 caracteres antes del arroba.
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Contrasena</mat-label>
+                        <input [type]="ocultarPassword ? 'password' : 'text'" formControlName="password" matInput autocomplete="current-password">
+                        <button
+                            mat-icon-button
+                            matSuffix
+                            type="button"
+                            class="visibility-button"
+                            [attr.aria-label]="ocultarPassword ? 'Mostrar contrasena' : 'Ocultar contrasena'"
+                            (click)="ocultarPassword = !ocultarPassword">
+                            <mat-icon>{{ocultarPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="formularioLogin.get('password')?.hasError('required')">
+                            La contrasena es obligatoria.
+                        </mat-error>
+                    </mat-form-field>
+
+                <button class="submit-button full-width" mat-raised-button type="submit" [disabled]="formularioLogin.invalid || mostrarLoading">
+                    <span>{{ mostrarLoading ? 'Validando acceso...' : 'Entrar al sistema' }}</span>
+                    <mat-icon>arrow_forward</mat-icon>
+                </button>
+
+                <button *ngIf="accesoDemoDisponible" class="demo-button full-width" mat-stroked-button type="button" (click)="ingresarDemo()">
+                    <span>Entrar en modo demo</span>
+                    <mat-icon>construction</mat-icon>
                 </button>
             </form>
         </mat-card-content>
 
-        <mat-card-footer>
+        <mat-card-footer class="card-footer">
             <mat-progress-bar mode="indeterminate" *ngIf="mostrarLoading"></mat-progress-bar>
+            <p *ngIf="!mostrarLoading && accesoDemoDisponible">En desarrollo puedes entrar con sesion demo local para revisar la interfaz.</p>
+            <p *ngIf="!mostrarLoading && !accesoDemoDisponible">Sesion persistida localmente, interceptor de autorizacion y consumo de API REST.</p>
         </mat-card-footer>
     </mat-card>
+</div>
 </div>

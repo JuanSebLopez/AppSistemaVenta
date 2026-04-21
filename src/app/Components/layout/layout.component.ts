@@ -52,8 +52,16 @@ export class LayoutComponent implements OnInit{
         next: (data) =>{
           if(data.status) this.listaMenus = data.value;
         },
-        error:(e)=>{}
+        error:(e)=>{
+          if (this._utilidadServicio.permitirAccesoDemo()) {
+            this.listaMenus = this._utilidadServicio.obtenerMenusDemo();
+          }
+        }
       });
+
+      if (this._utilidadServicio.permitirAccesoDemo() && this.listaMenus.length === 0) {
+        this.listaMenus = this._utilidadServicio.obtenerMenusDemo();
+      }
     }
   }
 
