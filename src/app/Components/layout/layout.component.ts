@@ -41,6 +41,32 @@ export class LayoutComponent implements OnInit{
     private _utilidadServicio: UtilidadService
   ) { }
 
+  private normalizarRutaMenu(url: string): string {
+    const valor = (url || '').trim().toLowerCase();
+    const limpio = valor
+      .replace(/^https?:\/\/[^/]+/i, '')
+      .replace(/^\/+/, '')
+      .replace(/^pages\/+/, '')
+      .replace(/^page\/+/, '');
+
+    const alias: Record<string, string> = {
+      'dashboard': '/pages/dashboard',
+      'usuarios': '/pages/usuarios',
+      'usuario': '/pages/usuarios',
+      'productos': '/pages/productos',
+      'producto': '/pages/productos',
+      'venta': '/pages/venta',
+      'ventas': '/pages/venta',
+      'historial_venta': '/pages/historial_venta',
+      'historial-venta': '/pages/historial_venta',
+      'historialventa': '/pages/historial_venta',
+      'reportes': '/pages/reportes',
+      'reporte': '/pages/reportes'
+    };
+
+    return alias[limpio] || `/pages/${limpio}`;
+  }
+
   ngOnInit(): void {
     const usuario = this._utilidadServicio.obtenerSesionUsuario();
 
@@ -50,7 +76,12 @@ export class LayoutComponent implements OnInit{
 
       this._menuServicio.list(usuario.idUsuario).subscribe({
         next: (data) =>{
-          if(data.status) this.listaMenus = data.value;
+          if(data.status) {
+            this.listaMenus = (data.value as Menu[]).map((menu) => ({
+              ...menu,
+              url: this.normalizarRutaMenu(menu.url)
+            }));
+          }
         },
         error:(e)=>{}
       });
