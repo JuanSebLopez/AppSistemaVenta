@@ -166,21 +166,6 @@ mat-form-field {
     font-weight: 700;
 }
 
-.demo-button {
-    min-height: 54px;
-    margin-top: 10px;
-    border-radius: 10px !important;
-    border: 1px dashed rgba(21, 21, 21, 0.24) !important;
-    color: #151515 !important;
-    background: rgba(0, 0, 0, 0.03) !important;
-}
-
-.demo-button .mdc-button__label {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-}
-
 .submit-button .mdc-button__label {
     display: inline-flex;
     align-items: center;

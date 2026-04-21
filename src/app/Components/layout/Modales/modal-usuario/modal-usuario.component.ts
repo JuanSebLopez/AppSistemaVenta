@@ -75,20 +75,11 @@ export class ModalUsuarioComponent implements OnInit{
       this.botonAccion = "Actualizar";
     }
 
-    if (this._utilidadServicio.permitirAccesoDemo()) {
-      this.listaRoles = this._utilidadServicio.obtenerRolesDemo();
-      return;
-    }
-
     this._rolServicio.list().subscribe({
       next: (data) => {
         if(data.status) this.listaRoles = data.value
       },
-      error:(e) =>{
-        if (this._utilidadServicio.permitirAccesoDemo()) {
-          this.listaRoles = this._utilidadServicio.obtenerRolesDemo();
-        }
-      }
+      error:(e) =>{}
     });
   }
 
@@ -105,12 +96,6 @@ export class ModalUsuarioComponent implements OnInit{
   }
 
   guardarEditar_Usuario() {
-    if (this._utilidadServicio.permitirAccesoDemo()) {
-      this._utilidadServicio.mostrarAlerta("Modo demo: cambio visual aplicado temporalmente", "Demo");
-      this.modalActual.close("true");
-      return;
-    }
-
     const _usuario: Usuario = {
       idUsuario: this.datosUsuario == null ? 0 : this.datosUsuario.idUsuario,
       nombreCompleto: this.formularioUsuario.value.nombreCompleto,

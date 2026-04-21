@@ -79,10 +79,6 @@ export class VentaComponent {
       cantidad: ['', [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")]]
     });
 
-    if (this._utilidadServicio.permitirAccesoDemo()) {
-      this.listaProductos = this._utilidadServicio.obtenerProductosDemo().filter(p => p.esActivo == 1 && p.stock > 0);
-    }
-
     
     this._productoServicio.list().subscribe({
       next: (data) => {
@@ -91,11 +87,7 @@ export class VentaComponent {
           this.listaProductos = lista.filter(p => p.esActivo == 1 && p.stock > 0);
         }
       },
-      error:(e) =>{
-        if (this._utilidadServicio.permitirAccesoDemo()) {
-          this.listaProductos = this._utilidadServicio.obtenerProductosDemo().filter(p => p.esActivo == 1 && p.stock > 0);
-        }
-      }
+      error:(e) =>{}
     })
 
     this.formularioProductoVenta.get('producto')?.valueChanges.subscribe(value => {
@@ -150,18 +142,6 @@ export class VentaComponent {
   registrarVenta(){
 
     if(this.listaProductosParaVenta.length > 0){
-      if (this._utilidadServicio.permitirAccesoDemo()) {
-        Swal.fire({
-          icon: 'success',
-          title : 'Venta simulada',
-          text: 'Modo demo: la operacion se mostro sin registrar datos reales.'
-        });
-        this.totalPagar = 0.00;
-        this.listaProductosParaVenta = [];
-        this.datosDetalleVenta = new MatTableDataSource(this.listaProductosParaVenta);
-        return;
-      }
-
       this.bloquearBotonRegistrar = true;
 
       const request: Venta = {

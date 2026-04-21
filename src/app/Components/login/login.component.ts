@@ -15,7 +15,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -40,7 +39,6 @@ export class LoginComponent implements OnInit{
   formularioLogin: FormGroup;
   ocultarPassword: boolean = true;
   mostrarLoading: boolean = false;
-  readonly accesoDemoDisponible = environment.enableDemoAccess;
 
   constructor(
     private fb: FormBuilder, 
@@ -105,10 +103,6 @@ export class LoginComponent implements OnInit{
     })
   }
 
-  ingresarDemo() {
-    this._utilidadServicio.crearSesionDemo();
-    this.router.navigate(["pages/dashboard"]);
-  }
 }
 
 export function emailMinLengthValidator(control: AbstractControl): ValidationErrors | null {

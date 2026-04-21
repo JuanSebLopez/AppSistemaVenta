@@ -56,11 +56,6 @@ export class UsuarioComponent implements OnInit, AfterViewInit{
   }
 
   obtenerUsuarios() {
-    if (this._utilidadServicio.permitirAccesoDemo()) {
-      this.dataListaUsuarios.data = this._utilidadServicio.obtenerUsuariosDemo();
-      return;
-    }
-
     this._usuarioServicio.list().subscribe({
       next: (data) => {
         if(data.status)
@@ -69,11 +64,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit{
         this._utilidadServicio.mostrarAlerta("No se encontraron datos", "Oops!");
       },
       error:(e) =>{
-        if (this._utilidadServicio.permitirAccesoDemo()) {
-          this.dataListaUsuarios.data = this._utilidadServicio.obtenerUsuariosDemo();
-        } else {
-          console.log(e);
-        }
+        console.log(e);
       }
     });
   }

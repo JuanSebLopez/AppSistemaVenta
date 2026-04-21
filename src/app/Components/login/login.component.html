@@ -68,18 +68,12 @@
                     <span>{{ mostrarLoading ? 'Validando acceso...' : 'Entrar al sistema' }}</span>
                     <mat-icon>arrow_forward</mat-icon>
                 </button>
-
-                <button *ngIf="accesoDemoDisponible" class="demo-button full-width" mat-stroked-button type="button" (click)="ingresarDemo()">
-                    <span>Entrar en modo demo</span>
-                    <mat-icon>construction</mat-icon>
-                </button>
             </form>
         </mat-card-content>
 
         <mat-card-footer class="card-footer">
             <mat-progress-bar mode="indeterminate" *ngIf="mostrarLoading"></mat-progress-bar>
-            <p *ngIf="!mostrarLoading && accesoDemoDisponible">En desarrollo puedes entrar con sesion demo local para revisar la interfaz.</p>
-            <p *ngIf="!mostrarLoading && !accesoDemoDisponible">Sesion persistida localmente, interceptor de autorizacion y consumo de API REST.</p>
+            <p *ngIf="!mostrarLoading">Sesion persistida localmente, interceptor de autorizacion y consumo de API REST.</p>
         </mat-card-footer>
     </mat-card>
 </div>

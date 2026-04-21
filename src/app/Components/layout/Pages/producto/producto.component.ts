@@ -60,11 +60,6 @@ export class ProductoComponent implements OnInit, AfterViewInit{
   ) { }
 
   obtenerProductos(){
-    if (this._utilidadServicio.permitirAccesoDemo()) {
-      this.dataListaProductos.data = this._utilidadServicio.obtenerProductosDemo();
-      return;
-    }
-
     this._productoServicio.list().subscribe({
       next: (data) => {
         if(data.status){
@@ -73,20 +68,11 @@ export class ProductoComponent implements OnInit, AfterViewInit{
         else
           this._utilidadServicio.mostrarAlerta("No se encontraron datos","Oops!")
       },
-      error:(e) =>{
-        if (this._utilidadServicio.permitirAccesoDemo()) {
-          this.dataListaProductos.data = this._utilidadServicio.obtenerProductosDemo();
-        }
-      }
+      error:(e) =>{}
     })
   }
 
   obtenerCategorias() {
-    if (this._utilidadServicio.permitirAccesoDemo()) {
-      this.dataListaCategorias.data = this._utilidadServicio.obtenerCategoriasDemo();
-      return;
-    }
-
     this._categoriaServicio.list().subscribe({
       next: (data) => {
         if (data.status)
@@ -94,11 +80,7 @@ export class ProductoComponent implements OnInit, AfterViewInit{
         else
           this._utilidadServicio.mostrarAlerta("No se encontraron categorías", "Oops!")
       },
-      error: (e) => {
-        if (this._utilidadServicio.permitirAccesoDemo()) {
-          this.dataListaCategorias.data = this._utilidadServicio.obtenerCategoriasDemo();
-        }
-      }
+      error: (e) => { }
     });
   }
 
