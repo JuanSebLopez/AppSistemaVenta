@@ -6,7 +6,6 @@ import { Sesion } from '../Interfaces/sesion';
   providedIn: 'root'
 })
 export class UtilidadService {
-
   constructor(private _snackBar:MatSnackBar) { }
 
   mostrarAlerta(mensaje:string, tipo:string) {

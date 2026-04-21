@@ -1,35 +1,54 @@
-<mat-toolbar color="primary">
-    <mat-toolbar-row>
-        <button mat-icon-button (click)="sidenav.toggle();">
-            <mat-icon>menu</mat-icon>
-        </button>
+<div class="layout-shell">
+    <mat-toolbar class="app-toolbar">
+        <mat-toolbar-row class="toolbar-row">
+            <div class="toolbar-brand">
+                <button mat-icon-button class="toolbar-icon" (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
 
-        <h1>Sistema Venta</h1>
+                <div class="brand-mark">SV</div>
 
-        <span style="flex: 1 1 auto;"></span>
+                <div class="brand-copy">
+                    <strong>Sistema Venta</strong>
+                    <span>Entorno administrativo de practica</span>
+                </div>
+            </div>
 
-        <label style="font-size: 14px; margin-right: 20px;">
-            {{correoUsuario}} | {{rolUsuario}}
-        </label>
-        <button mat-icon-button (click)="cerrarSesion()">
-            <mat-icon>logout</mat-icon>
-        </button>
-    </mat-toolbar-row>
-</mat-toolbar>
+            <div class="toolbar-meta">
+                <div class="meta-chip">
+                    <span>Usuario</span>
+                    <strong>{{correoUsuario}}</strong>
+                </div>
+                <div class="meta-chip">
+                    <span>Rol</span>
+                    <strong>{{rolUsuario}}</strong>
+                </div>
+                <button mat-icon-button class="toolbar-icon logout-button" (click)="cerrarSesion()">
+                    <mat-icon>logout</mat-icon>
+                </button>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
 
-<mat-sidenav-container>
-    <mat-sidenav #sidenav opened="true" mode="side" style="width: 200px;"  >
-        <mat-nav-list>
-            <mat-list-item *ngFor="let menu of listaMenus"   [routerLink]="menu.url">
-                <mat-icon mat-list-icon>{{menu.icono}}</mat-icon>
-                <div mat-line>{{menu.nombre}}</div>
-            </mat-list-item>
-        </mat-nav-list>
-    </mat-sidenav>
+    <mat-sidenav-container class="layout-container">
+        <mat-sidenav #sidenav opened="true" mode="side" class="app-sidenav">
+            <div class="sidenav-head">
+                <span class="sidenav-label">Modulos del sistema</span>
+                <p>Navegacion operativa para pruebas, gestion y consulta.</p>
+            </div>
 
-    <mat-sidenav-content>
-        <div style="height: 90vh;">
-            <router-outlet></router-outlet>
-        </div>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+            <mat-nav-list class="menu-list">
+                <mat-list-item *ngFor="let menu of listaMenus" [routerLink]="menu.url" routerLinkActive="active-link">
+                    <mat-icon matListItemIcon>{{menu.icono}}</mat-icon>
+                    <div matListItemTitle>{{menu.nombre}}</div>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content class="layout-content">
+            <div class="content-shell">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

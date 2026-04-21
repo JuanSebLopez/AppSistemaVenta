@@ -139,7 +139,7 @@ export class HistorialVentaComponent implements AfterViewInit{
     ).subscribe({
       next: (data) =>{
         if(data.status)
-          this.datosListaVenta = data.value;
+          this.datosListaVenta.data = data.value;
         else
           this._utilidadServicio.mostrarAlerta("No se encontraron datos","Oops!");
       },

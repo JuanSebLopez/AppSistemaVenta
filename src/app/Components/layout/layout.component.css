@@ -1,24 +1,164 @@
-mat-list-item {
-    height: 56px !important; 
+.layout-shell {
+    min-height: 100vh;
+    background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, #d9d4cb 0%, #efebe3 100%);
+    background-size: 30px 30px, 30px 30px, auto;
 }
 
-mat-list-item {
+.app-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: auto;
+    padding: 0 20px;
+    background: rgba(239, 235, 227, 0.9);
+    border-bottom: 1px solid rgba(21, 21, 21, 0.12);
+    backdrop-filter: blur(12px);
+}
+
+.toolbar-row {
+    min-height: 80px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.toolbar-brand,
+.toolbar-meta {
     display: flex;
     align-items: center;
+    gap: 14px;
 }
 
-mat-icon {
-    margin-right: 8px; /* Asegura espacio entre el ícono y el texto */
+.brand-mark {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #151515;
+    color: #f1eee8;
+    font-weight: 700;
+    letter-spacing: 0.08em;
 }
 
-mat-sidenav mat-nav-list mat-list-item mat-icon {
-    margin-right: 8px;
-    font-size: 24px; /* O el tamaño que desees */
-    vertical-align: middle; /* Alinea el ícono verticalmente con el texto */
+.brand-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
-mat-sidenav mat-nav-list mat-list-item div[mat-line] {
+.brand-copy strong {
+    font-size: 1rem;
+    line-height: 1.1;
+}
+
+.brand-copy span,
+.meta-chip span,
+.sidenav-label,
+.sidenav-head p {
+    color: rgba(21, 21, 21, 0.64);
+}
+
+.meta-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 150px;
+    padding: 10px 14px;
+    border: 1px solid rgba(21, 21, 21, 0.1);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.meta-chip strong {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.toolbar-icon {
+    color: #151515;
+}
+
+.logout-button {
+    border: 1px solid rgba(21, 21, 21, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.layout-container {
+    min-height: calc(100vh - 80px);
+    background: transparent;
+}
+
+.app-sidenav {
+    width: 270px;
+    padding: 20px 14px;
+    border-right: 1px solid rgba(21, 21, 21, 0.1);
+    background: rgba(246, 243, 238, 0.9);
+}
+
+.sidenav-head {
+    padding: 8px 12px 18px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(21, 21, 21, 0.08);
+}
+
+.sidenav-label {
     display: inline-block;
-    vertical-align: middle;
-    margin-left: 8px; /* Espacio entre el ícono y el texto */
+    margin-bottom: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.sidenav-head p {
+    margin: 0;
+    line-height: 1.55;
+}
+
+.menu-list {
+    display: grid;
+    gap: 6px;
+}
+
+.menu-list .mdc-list-item {
+    height: auto !important;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    color: #151515;
+}
+
+.menu-list .mdc-list-item:hover,
+.menu-list .active-link {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(21, 21, 21, 0.1);
+}
+
+.layout-content {
+    background: transparent;
+}
+
+.content-shell {
+    min-height: 100%;
+    padding: 24px;
+}
+
+@media (max-width: 960px) {
+    .toolbar-row,
+    .toolbar-meta {
+        flex-wrap: wrap;
+    }
+
+    .meta-chip {
+        min-width: unset;
+    }
+
+    .content-shell {
+        padding: 16px;
+    }
 }

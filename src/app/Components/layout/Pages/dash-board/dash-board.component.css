@@ -1,9 +1,88 @@
-.card-info{
-    width: 80%;
+.page-shell {
+    display: grid;
+    gap: 18px;
 }
 
-.mat-icon{
-    font-size: 50px !important;
-    height: 50px !important;
-    width: 50px !important;
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: end;
+}
+
+.page-kicker,
+.metric-label {
+    margin: 0 0 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6a6a6a;
+}
+
+.page-header h1,
+.panel-heading h2 {
+    margin: 0;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1;
+}
+
+.page-note {
+    padding: 12px 16px;
+    border: 1px solid rgba(21, 21, 21, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.page-note span {
+    display: block;
+    color: #6a6a6a;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.metric-card,
+.panel-card {
+    border: 1px solid rgba(21, 21, 21, 0.12);
+    border-radius: 12px;
+    background: rgba(251, 249, 245, 0.9);
+    box-shadow: none;
+}
+
+.metric-card mat-card-content {
+    display: grid;
+    gap: 12px;
+    padding: 22px;
+}
+
+.metric-card strong {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    line-height: 1;
+}
+
+.metric-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: #151515;
+    color: #f1eee8;
+}
+
+.chart-shell {
+    height: 400px;
+}
+
+@media (max-width: 900px) {
+    .page-header,
+    .stats-grid {
+        grid-template-columns: 1fr;
+        display: grid;
+    }
 }

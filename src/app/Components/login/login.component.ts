@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Login } from '../../Interfaces/login';
 import { UsuarioService } from '../../Services/usuario.service';
 import { UtilidadService } from '../../Reutilizable/utilidad.service';
@@ -28,7 +28,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -101,6 +102,7 @@ export class LoginComponent implements OnInit{
       }
     })
   }
+
 }
 
 export function emailMinLengthValidator(control: AbstractControl): ValidationErrors | null {

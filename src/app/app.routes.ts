@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './Components/login/login.component';
 import { LayoutComponent } from './Components/layout/layout.component';
+import { LandingComponent } from './Components/landing/landing.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full'},
+    { path: '', component: LandingComponent, pathMatch: 'full'},
     { path: 'login', component: LoginComponent, pathMatch: 'full'},
     {
         path: 'pages',
@@ -17,5 +18,5 @@ export const routes: Routes = [
             { path: 'reportes', loadComponent: () => import('./Components/layout/Pages/reporte/reporte.component').then(m => m.ReporteComponent)}
         ]
     },
-    { path: '**', redirectTo: 'login', pathMatch: 'full'}
+    { path: '**', redirectTo: '', pathMatch: 'full'}
 ];

@@ -142,7 +142,6 @@ export class VentaComponent {
   registrarVenta(){
 
     if(this.listaProductosParaVenta.length > 0){
-
       this.bloquearBotonRegistrar = true;
 
       const request: Venta = {

@@ -1,0 +1,108 @@
+.page-shell,
+.panel-body {
+    display: grid;
+    gap: 18px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: end;
+}
+
+.page-kicker {
+    margin: 0 0 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6a6a6a;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.total-chip {
+    padding: 12px 16px;
+    border: 1px solid rgba(21, 21, 21, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.total-chip span {
+    display: block;
+    color: #6a6a6a;
+}
+
+.panel-card {
+    border: 1px solid rgba(21, 21, 21, 0.12);
+    border-radius: 12px;
+    background: rgba(251, 249, 245, 0.9);
+    box-shadow: none;
+}
+
+.panel-body {
+    padding: 22px;
+}
+
+.sales-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(140px, 0.5fr) minmax(160px, 0.5fr);
+    gap: 14px;
+    align-items: start;
+}
+
+.second-row {
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 0.4fr) minmax(200px, 0.4fr);
+}
+
+.full-width,
+.table-shell,
+table {
+    width: 100%;
+}
+
+.action-button,
+.ghost-button {
+    min-height: 56px;
+    border-radius: 10px;
+}
+
+.action-button {
+    background: #151515 !important;
+    color: #f1eee8 !important;
+}
+
+.ghost-button {
+    background: rgba(0, 0, 0, 0.06) !important;
+    color: #151515 !important;
+    border: 1px solid rgba(21, 21, 21, 0.12);
+}
+
+.table-shell {
+    overflow: auto;
+    border: 1px solid rgba(21, 21, 21, 0.08);
+    border-radius: 10px;
+}
+
+.footer-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.register-button {
+    min-width: 200px;
+}
+
+@media (max-width: 900px) {
+    .page-header,
+    .sales-grid,
+    .second-row {
+        grid-template-columns: 1fr;
+        display: grid;
+    }
+}
